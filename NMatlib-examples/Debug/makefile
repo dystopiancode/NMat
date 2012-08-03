@@ -28,7 +28,7 @@ all: NMatlib-examples
 NMatlib-examples: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/bogdan/git/NMatlib/NMatlib/Debug" -o "NMatlib-examples" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/bogdan/Ubuntu One/Eclipse/NMatLib/NMatlib/Debug" -o "NMatlib-examples" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

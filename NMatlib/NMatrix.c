@@ -7,9 +7,10 @@
 #include"NMatrix.h"
 
 
-NMatrix* NMatrix_Create(NMatrix *matrix, integer rows, integer columns)
+NMatrix* NMatrix_Create(integer rows, integer columns)
 {
 	integer i = 0;
+	NMatrix* matrix = NULL;
 	matrix = (NMatrix*)malloc(sizeof(NMatrix));
 	if(matrix!=NULL)
 	{
@@ -45,7 +46,7 @@ NMatrix* NMatrix_Clone(const NMatrix *source)
 {
 	integer i,j;
 	NMatrix *dest = NULL;
-	dest = NMatrix_Create(dest, source->rows, source->columns);
+	dest = NMatrix_Create(source->rows, source->columns);
 	if(dest!=NULL)
 	{
 		for(i=0;i<source->rows;i++)
@@ -65,7 +66,7 @@ NMatrix* NMatrix_Sum(const NMatrix* mat1,const NMatrix* mat2)
     NMatrix *result = NULL;
     if((mat1->rows==mat2->rows) && (mat1->columns==mat2->columns))
     {
-        result = NMatrix_Create(result, mat1->rows, mat1->columns);
+        result = NMatrix_Create(mat1->rows, mat1->columns);
         for(i=0;i<mat1->rows;i++)
         {
             for(j=0;j<mat1->columns;j++)
@@ -81,7 +82,7 @@ NMatrix* NMatrix_MultiplyWithScalar(const NMatrix* mat, real value)
 {
     integer i = 0, j = 0;
     NMatrix *smat = NULL;
-    smat = NMatrix_Clone(mat, smat);
+    smat = NMatrix_Clone(mat);
     for(i=0;i<mat->rows;i++)
     {
         for(j=0;j<mat->columns;j++)
@@ -98,7 +99,7 @@ NMatrix* NMatrix_Product(const NMatrix* mat1,const NMatrix* mat2)
     NMatrix *result = NULL;
     if(mat1->rows==mat2->columns)
     {
-        result = NMatrix_Create(result, mat1->rows, mat2->columns);
+        result = NMatrix_Create(mat1->rows, mat2->columns);
         for(i=0;i<mat1->rows;i++)
         {
             for(j=0;j<mat2->columns;j++)
@@ -121,7 +122,7 @@ NMatrix* NMatrix_GetPrimaryDiagonal(NMatrix *mat)
     NMatrix *diagonal = NULL;
     if(mat->rows==mat->columns)
     {
-        diagonal = NMatrix_Create(diagonal,1,mat->columns);
+        diagonal = NMatrix_Create(1,mat->columns);
         for(i=0;i<mat->rows;i++)
         {
           diagonal->data[0][i] = mat->data[i][i];
@@ -136,7 +137,7 @@ NMatrix* NMatrix_GetSecondaryDiagonal(NMatrix* mat)
     NMatrix *diagonal = NULL;
     if(mat->rows==mat->columns)
     {
-    	diagonal = NMatrix_Create(diagonal,1,mat->columns);
+    	diagonal = NMatrix_Create(1,mat->columns);
 		for(i=0;i<mat->rows;i++)
 		{
 			diagonal->data[0][i] = mat->data[i][mat->rows-1-i];
@@ -157,12 +158,12 @@ NMatrix* NMatrix_Minor(const NMatrix *mat, integer row,
    {
 	   if(order==1)
 	   {
-		   minor = NMatrix_Create(minor,1,1);
+		   minor = NMatrix_Create(1,1);
 		   minor->data[0][0] = mat->data[row][column];
 	   }
 	   else
 	   {
-		   minor = NMatrix_Create(minor, order, order);
+		   minor = NMatrix_Create(order, order);
 		   for(i=0; i<=order; i++)
 		   {
 			   if(i!=row)
@@ -199,7 +200,7 @@ real NMatrix_Determinant(const NMatrix *mat, integer order)
 	   {
 		   for (k=0 ; k<order ; k++)
 		   {
-			   minor = NMatrix_Create(minor,order,order);
+			   minor = NMatrix_Create(order,order);
 		       for(i=1 ; i<order ; i++)
 		       {
 		    	   l = 0;
@@ -229,7 +230,7 @@ NMatrix* NMatrix_Transpose(const NMatrix* mat)
 {
    integer i = 0, j = 0;
    NMatrix* transpose = NULL;
-   transpose = NMatrix_Create(transpose,mat->columns,mat->rows);
+   transpose = NMatrix_Create(mat->columns,mat->rows);
    for(i=0;i<transpose->rows;i++)
    {
 	   for(j=0;j<transpose->columns;j++)
@@ -249,7 +250,7 @@ NMatrix* NMatrix_Adjugate(const NMatrix* mat)
    if(mat->columns == mat->rows)
    {
        dim = mat->columns;
-       cofactor = NMatrix_Create(cofactor,dim,dim);
+       cofactor = NMatrix_Create(dim,dim);
        for(j=0;j<dim;j++)
        {
 		   for(i=0;i<dim;i++)
@@ -273,7 +274,7 @@ NMatrix* NMatrix_Inverse(const NMatrix* mat)
         det = NMatrix_Determinant(mat,mat->rows);
         if(det != 0.0f)
         {
-        	inv = NMatrix_Create(inv,mat->rows,mat->columns);
+        	inv = NMatrix_Create(mat->rows,mat->columns);
         	coeficent = 1.0f/NMatrix_Determinant(mat,mat->rows);
             inv = NMatrix_Adjugate(mat);
             inv = NMatrix_MultiplyWithScalar(inv,coeficent);
@@ -383,14 +384,14 @@ NMatrix* NMatrix_Submatrix(const NMatrix* mat,
 	if( (startRow>=0) && (endRow<=mat->rows) && (startRow<=endRow) &&
 		(startColumn>=0) && (endColumn<=mat->columns) && (startColumn<=endColumn) )
 	{
-		minor = NMatrix_Create(mat,(endRow-startRow),(endColumn-startColumn));
+		minor = NMatrix_Create((endRow-startRow),(endColumn-startColumn));
 		if(minor!=NULL)
 		{
 			for(i=startRow; i<=endRow; i++)
 			{
 				for(j=startColumn; j<=endColumn; j++)
 				{
-					minor[i][j] = mat[i][j];
+					minor->data[i][j] = mat->data[i][j];
 				}
 			}
 		}

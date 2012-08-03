@@ -34,13 +34,12 @@ typedef struct
  * 	Alocates spaces for a NMatrix structure according to the parameters
  * @rows si @columns.
  * Parameters:
- * 	matrix - a pointer to the NMatrix structure
  * 	rows - the number of rows
  * 	columns - the number of columns
  * Returns:
  *  A pointer to the allocated matrix structure.
  */
-NMatrix* NMatrix_Create(NMatrix *matrix, integer rows, integer columns);
+NMatrix* NMatrix_Create(integer rows, integer columns);
 /*
  * Description:
  * 	Free the space hold by a NMatrix structure
@@ -64,7 +63,7 @@ NMatrix* NMatrix_Destroy(NMatrix *matrix);
  * Preconditions:
  *  @matrix must not be NULL
  */
-NMatrix* NMatrix_Clone(const NMatrix *source, NMatrix *dest);
+NMatrix* NMatrix_Clone(const NMatrix *source);
 /*
  * Description:
  * 	Sums up two matrices

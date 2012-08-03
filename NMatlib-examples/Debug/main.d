@@ -1,3 +1,4 @@
-main.d: ../main.c /home/bogdan/git/NMatlib/NMatlib/NMatrix.h
+main.d: ../main.c \
+ /home/bogdan/Ubuntu\ One/Eclipse/NMatLib/NMatlib/NMatrix.h
 
-/home/bogdan/git/NMatlib/NMatlib/NMatrix.h:
+/home/bogdan/Ubuntu\ One/Eclipse/NMatLib/NMatlib/NMatrix.h:
