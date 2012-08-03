@@ -22,19 +22,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: libNMatlib.a
+all: libNMat.a
 
 # Tool invocations
-libNMatlib.a: $(OBJS) $(USER_OBJS)
+libNMat.a: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC Archiver'
-	ar -r  "libNMatlib.a" $(OBJS) $(USER_OBJS) $(LIBS)
+	ar -r  "libNMat.a" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(ARCHIVES) libNMatlib.a
+	-$(RM) $(OBJS)$(C_DEPS)$(ARCHIVES) libNMat.a
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -22,19 +22,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: NMatlib-examples
+all: NMat-examples
 
 # Tool invocations
-NMatlib-examples: $(OBJS) $(USER_OBJS)
+NMat-examples: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/bogdan/Ubuntu One/Eclipse/NMatLib/NMatlib/Debug" -o "NMatlib-examples" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/bogdan/Ubuntu One/Eclipse/NMatLib/NMat/Debug" -o "NMat-examples" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) NMatlib-examples
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) NMat-examples
 	-@echo ' '
 
 .PHONY: all clean dependents

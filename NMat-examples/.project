@@ -3,7 +3,7 @@
 	<name>NMat-examples</name>
 	<comment></comment>
 	<projects>
-		<project>NMatlib</project>
+		<project>NMat</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
