@@ -12,6 +12,11 @@
 #include <stdlib.h>
 #include "NMatrix.h"
 
-void Examples_BasicNMat(void);
+void Examples_CreateCopyDestroy(void);
+void Examples_SumProduct(void);
+void Examples_Minor(void);
+void Examples_Determinant(void);
+void Examples_TransposeAdjutantInverse(void);
+void Examples_Others(void);
 
 #endif /* EXAMPLES_H_ */

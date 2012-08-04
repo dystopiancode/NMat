@@ -188,13 +188,18 @@ NMatrix* NMatrix_Minor(const NMatrix *mat, integer row,
 real NMatrix_Determinant(const NMatrix *mat, integer order)
 {
    integer i = 0 ,j = 0 ,k = 0 ,l = 0;
-   real det = 0.0f;
+   real det = 0.0;
    NMatrix *minor = NULL;
    if((mat->rows == mat->columns) && (order>=1) && (order<=mat->rows))
    {
 	   if(order==1)
 	   {
 		   det = mat->data[0][0];
+	   }
+	   else if(order==2)
+	   {
+		   det = (mat->data[0][0] * mat->data[1][1]) -
+				 (mat->data[0][1] * mat->data[1][0]);
 	   }
 	   else
 	   {
@@ -244,24 +249,24 @@ NMatrix* NMatrix_Transpose(const NMatrix* mat)
 NMatrix* NMatrix_Adjugate(const NMatrix* mat)
 {
    integer i = 0, j = 0, dim = 0;
-   real det = 0.0f;
+   real det = 0.0;
    NMatrix* minor = NULL;
-   NMatrix* cofactor = NULL;
+   NMatrix* adjugate = NULL;
    if(mat->columns == mat->rows)
    {
        dim = mat->columns;
-       cofactor = NMatrix_Create(dim,dim);
+       adjugate = NMatrix_Create(dim,dim);
        for(j=0;j<dim;j++)
        {
 		   for(i=0;i<dim;i++)
 		   {
 			   minor = NMatrix_Minor(mat,i,j,dim-1);
 			   det = NMatrix_Determinant(minor,dim-1);
-			   cofactor->data[i][j] = pow(-1.0f,i+j+2.0f) * det;
+			   adjugate->data[i][j] = pow(-1.0f,i+j+2.0f) * det;
 		   }
       }
    }
-   return cofactor;
+   return adjugate;
 }
 
 NMatrix* NMatrix_Inverse(const NMatrix* mat)
@@ -381,17 +386,20 @@ NMatrix* NMatrix_Submatrix(const NMatrix* mat,
 {
 	NMatrix* minor = NULL;
 	integer i,j;
-	if( (startRow>=0) && (endRow<=mat->rows) && (startRow<=endRow) &&
-		(startColumn>=0) && (endColumn<=mat->columns) && (startColumn<=endColumn) )
+	integer rows, columns;
+	if( (startRow>=0) && (endRow<mat->rows) && (startRow<=endRow) &&
+		(startColumn>=0) && (endColumn<mat->columns) && (startColumn<=endColumn) )
 	{
-		minor = NMatrix_Create((endRow-startRow),(endColumn-startColumn));
+		rows = endRow - startRow + 1;
+		columns = endColumn - startColumn +1;
+		minor = NMatrix_Create(rows,columns);
 		if(minor!=NULL)
 		{
-			for(i=startRow; i<=endRow; i++)
+			for(i=0; i<rows; i++)
 			{
-				for(j=startColumn; j<=endColumn; j++)
+				for(j=0; j<columns; j++)
 				{
-					minor->data[i][j] = mat->data[i][j];
+					minor->data[i][j] = mat->data[i+startRow][j+startColumn];
 				}
 			}
 		}
@@ -426,6 +434,7 @@ real NMatrix_GeometricMean(const NMatrix* mat)
 	integer i, j;
 	if(mat!=NULL)
 	{
+		result = 0.0;
 		for(i = 0; i<mat->rows; i++)
 		{
 			for(j = 0; j<mat->columns; j++)
